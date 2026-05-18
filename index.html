@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Master - Ibrahim</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e293b">
+</head>
+<body>
+    <div class="main-wrapper">
+        <div id="home-screen" class="container active">
+            <h1 id="ui-title">اختبار الكتابة ⌨️</h1>
+            <p class="score-p"><span id="ui-best">أفضل:</span> <span id="high-score-val">0</span></p>
+            <button id="ui-words-btn" onclick="startMode('words')" class="btn-3d green-3d">الكلمات ✅</button>
+            <button id="ui-sentences-btn" onclick="startMode('sentences')" class="btn-3d green-3d">الجمل ✅</button>
+            <button id="ui-settings-btn" onclick="showScreen('settings-screen')" class="btn-3d yellow-3d">الإعدادات ⚙️</button>
+        </div>
+
+        <div id="settings-screen" class="container hidden">
+            <h2 id="ui-settings-title">الإعدادات</h2>
+            <button id="lang-btn" onclick="cycleLang()" class="btn-3d yellow-3d">العربية 🌍</button>
+            <div class="diff-grid">
+                <button id="ui-easy" onclick="setDiff(1.8, this)" class="diff-btn active">سهل</button>
+                <button id="ui-medium" onclick="setDiff(1, this)" class="diff-btn">متوسط</button>
+                <button id="ui-hard" onclick="setDiff(0.5, this)" class="diff-btn">صعب</button>
+            </div>
+            <button id="mute-btn" onclick="toggleMute()" class="btn-3d green-3d">🔊 صوت: مفعّل</button>
+            <button id="ui-back" onclick="showScreen('home-screen')" class="btn-3d red-3d">رجوع</button>
+            <footer id="ui-dev" class="settings-footer">المطور: إبراهيم</footer>
+        </div>
+
+        <div id="game-screen" class="container hidden">
+            <div class="game-stats">
+                <span>⏱️ <span id="timer-display">0</span>s</span>
+                <span>🏆 <span id="score-display">0</span></span>
+            </div>
+            
+            <div id="play-area">
+                <h2 id="target-text">...</h2>
+                <input type="text" id="user-input" autocomplete="off" placeholder="...">
+            </div>
+
+            <div id="result-area" class="result-modal hidden">
+                <h3 id="ui-good-job">أحسنت! 🌟</h3>
+                <p><span id="time-taken" class="highlight">0</span> <span id="ui-sec">ثانية</span></p>
+                <button id="ui-next" onclick="nextLevel()" class="btn-3d green-3d">التالي ➡️</button>
+            </div>
+
+            <button id="ui-quit" onclick="quitGame()" class="btn-3d red-3d">خروج</button>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
