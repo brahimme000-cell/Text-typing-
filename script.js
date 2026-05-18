@@ -101,11 +101,38 @@ function checkHighScore() { const lang = languages[currentLangIndex], saved = lo
 
 function quitGame() { clearInterval(timer); checkHighScore(); showScreen('home-screen'); }
 
-// تسجيل الـ Service Worker للعمل أوفلاين
+// منظومة التسجيل والتحديث التلقائي
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(err => console.log(err));
+        navigator.serviceWorker.register('sw.js').then((reg) => {
+            console.log('Service Worker Registered!');
+
+            // 1. فحص التحديثات فوراً بمجرد عودة الإنترنت (Online)
+            window.addEventListener('online', () => {
+                reg.update();
+            });
+
+            // 2. إذا عثر المتصفح على ملف sw.js جديد (تحديث)
+            reg.addEventListener('updatefound', () => {
+                const newWorker = reg.installing;
+                newWorker.addEventListener('statechange', () => {
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                        console.log('New update available and installed.');
+                    }
+                });
+            });
+        });
+    });
+
+    // 3. إعادة تنشيط الصفحة تلقائياً لتطبيق التعديلات فوراً للاعب
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!refreshing) {
+            refreshing = true;
+            window.location.reload(); // إعادة تشغيل اللعبة بالتحديث الجديد سحرياً
+        }
     });
 }
+
 
 window.onload = () => { translatePage(); document.getElementById('home-screen').classList.add('active'); };
